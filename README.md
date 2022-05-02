@@ -16,7 +16,8 @@
 This plugin lets you get collection of mapping from MapBiomas Project.
 
 ## Author
-Luiz Motta, Luiz Cortinhas
+Luiz Cortinhas (C) 2022
+Fork from Luiz Motta - https://github.com/lmotta/mapbiomascollection
 
 ## Changelog
 - 2021-03-12
