@@ -55,7 +55,7 @@ class MapBiomasCollectionWidget(QWidget):
         #print(item)
         if item['parent'] == '0' and item['status'] == False:
             #print('returning blank')
-            return 'FFFFFF'
+            return 'FFFFFF00'
         if item['status']:
             return item['color']
         else:
