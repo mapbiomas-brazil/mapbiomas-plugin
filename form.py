@@ -148,7 +148,7 @@ def populateForm(dialog, feature):
     # . Populate by API
     global api
     if api is None:
-        r = getApi('PLUGIN') 
+        r = getApi('PLUGIN')
         if not r['isOk']:
             message( r['message'], Qgis.Critical )
             return 

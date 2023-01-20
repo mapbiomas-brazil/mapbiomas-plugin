@@ -9,9 +9,11 @@
 This plugin lets you get alert from MapBiomas Project.
 
 ## Author
-Luiz Motta
+Luiz Motta, Luiz Cortinhas
 
 ## Changelog
+- 2023-01-20
+Fixed Bug Car ID
 - 2021-05-31
 Fixed Bug (import planet)
 - 2021-04-12

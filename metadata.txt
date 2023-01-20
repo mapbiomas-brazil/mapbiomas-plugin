@@ -1,9 +1,9 @@
 [general]
-name:MapBiomas Alert
+name:MapBiomas Alert Oficial Plugin
 description:This plugin lets you get alert from MapBiomas Project(http://alerta.mapbiomas.org/).
 about:This plugin lets you get alert from MapBiomas Project(http://alerta.mapbiomas.org/).
 
-version:1.2.1
+version:1.2.2
 qgisMinimumVersion:3.10
 
 author:Luiz Motta, Luiz Cortinhas
@@ -11,7 +11,7 @@ email:motta.luiz@gmail.com, luiz.cortinhas@solved.eco.br
 
 category:Plugin
 
-tags:MapBiomas, Alert
+tags:MapBiomas, Alert, Oficial
 
 homepage:https://github.com/lmotta/mapbiomasalert/wiki
 tracker:https://github.com/lmotta/mapbiomasalert/issues
@@ -22,7 +22,11 @@ icon:mapbiomas_alert.png
 experimental:False
 deprecated:False
 
-changelog: 1.2(2021-05-31)
+changelog: 1.2.2(2023-01-20)
+New features: 
+  -1.2.1 (2023-01-20)
+  load images and report (importing data from Mapbiomas Platform)
+  - 1.2(2021-05-31)
   Fixed Bug (import planet)
   - 1.1(2021-04-12)
   Used graphQL API and territory_bbox(filter IDs)

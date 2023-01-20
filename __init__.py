@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
-Name                 : MapBiomas Alert
-Description          : MapBiomas Alert
-Date                 : April, 2019
-copyright            : (C) 2019 by Luiz Motta
-email                : motta.luiz@gmail.com
+Name                 : MapBiomas Alert Oficial
+Description          : MapBiomas Alert Oficial
+Date                 : January, 2023
+copyright            : (C) 2019 by Luiz Motta (Deprecated), (C) 2022 by Luiz Cortinhas
+email                : motta.luiz@gmail.com, luiz.cortinhas@solved.eco.br
 
  ***************************************************************************/
 
@@ -20,8 +20,8 @@ email                : motta.luiz@gmail.com
 """
 
 __author__ = 'Luiz Motta, Luiz Cortinhas'
-__date__ = '2019-04-19'
-__copyright__ = '(C) 2019, Luiz Motta, (C) 2022, Luiz Cortinhas'
+__date__ = '2023-01-20'
+__copyright__ = '(C) 2019, Luiz Motta, (C) 2023, Luiz Cortinhas'
 __revision__ = '$Format:%H$'
 
 

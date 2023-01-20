@@ -190,7 +190,7 @@ class API_MapbiomasAlert(QObject):
     def setToken(self, email, password, sendMessage=False):
         values = { 'email': email, 'password': password }
         data = self._replaceQuery( values, self.Q_TOKEN )
-        #print(data)
+        print(data)
         response = self._request( data )
         if not response:
             self.message.emit( self.request.errorMessage(), Qgis.Critical )
@@ -203,6 +203,7 @@ class API_MapbiomasAlert(QObject):
             return
         token = response['data']['signIn']['token']
         value = f"Bearer {token}"
+        self.message.emit( 'Connected', Qgis.Critical)
         API_MapbiomasAlert.NETWORKREQUEST.setRawHeader( b'Authorization', value.encode('utf-8') )
         self.tokenOk = True
 
@@ -216,11 +217,14 @@ class API_MapbiomasAlert(QObject):
             #layer= QgsVectorLayer (uri.uri(False), "temp_gis_published_alerts", "postgres")
             layer = QgsVectorLayer(url, 'qgis_published_alerts', 'WFS')
             #QgsProject.instance().addMapLayer(layer)
+            #print('Attributos:')
             for field in layer.fields():
                 print(field.name(), field.typeName())
-            #print('Here')
+            #print('Getting Features')
             values = layer.getFeatures()
-            #print(values.next())
+            #print('Next')
+            #print(layer.getFeatures().next())
+            #print('Value')
             values = [ dbAlerts.transformItemWFS( v ,self) for v in values ]
             self.alerts.emit( values )
             layer.reload()
@@ -240,7 +244,7 @@ class API_MapbiomasAlert(QObject):
     
 
     def getAlertsWFSnonThread(self, url, dbAlerts,fromDate, toDate,ids):
-        print('WFS mode')
+        print('WFS without Thread mode')
         print('url= '+url)
         #uri = QgsDataSourceUri()
         #uri.setConnection("34.86.182.142", "5432", "alerta", "stg_geoserver_usr", "hJ2zZn0uW4af")
@@ -251,11 +255,15 @@ class API_MapbiomasAlert(QObject):
         #QgsProject.instance().addMapLayer(layer)
         for field in layer.fields():
             print(field.name(), field.typeName())
-        #print('Here')
+        print('Get Features')
         values = layer.getFeatures()
-        #print(values.next())
+        print('Transforming')
+        #print('Total of Features:')
+        #print(len(values))
         values = [ dbAlerts.transformItemWFS( v ,self) for v in values ]
-        self.alerts.emit( values )
+        print('Transformed')
+        self.alerts.emit(values)
+        print('Emitted')
         #layer.reload()
         return { 'total': 1 }
 
@@ -355,14 +363,17 @@ class API_MapbiomasAlert(QObject):
         return "{url}?{params}".format( url=API_MapbiomasAlert.urlGeoserver, params=params )
     
     @staticmethod
-    def getUrlAlertsPaginated(wktGeom,step,offset,after,before):
+    def getUrlAlertsPaginated(wktGeom,offset,step,after,before):
+        print('offset='+str(offset))
+        print('step='+str(step))
+        print(int(offset)*int(int(step)))
         params = {
             'service': 'WFS',
             'version': '1.0.0',
             'request': 'GetFeature',
             'typeName': 'mapbiomas-alerta:mv_qgis_published_alerts_snap_to_grid',
-            'maxFeatures':''+str(step),
-            'startIndex':''+str((offset*step)),
+            'maxFeatures':''+str(offset),
+            'startIndex':''+str((int(offset)*(int(step)-1))),
             'sortBy':'alert_code',
             #'outputFormat': 'application/json',
             #'MAXFEATURES':'10',
@@ -601,17 +612,21 @@ class DbAlerts(QObject):
         #new_item.setGeometry(QgsGeometry.fromMultiPolygonXY(item.geometry))
         #new_item.setGeometry(item.geometry)
         new_item['alertCode'] = item['alert_code']
-        new_item['source'] = item['source'] 
+        new_item['source'] = item['source']  #Problema 2
         new_item['areaHa'] = item['area_ha']
         # Date
-        detectedAt = item['detected_at'].split('/')
+        detectedAt = item['detected_at'].replace('Z','').split('-')
         detectedAt.reverse()
         new_item['detectedAt'] = '-'.join( detectedAt )
+        if item['cars'] == None or item['cars'] == 'NULL':
+            item['cars'] = '{}' # %problema 1
         cars = json.loads(item['cars'])
         new_item['carCode'] = [ v['car_code'] for v in cars ]
         new_item['carId'] = [ str(v['id']) for v in cars]
         new_item['carId'] = ','.join( new_item['carId'] )
         new_item['carCode'] = ','.join( new_item['carCode'] )
+        #new_item['carCode'] = ""
+        #new_item['carId'] = ""
         # carCode
         #item['carCode'] = [ v['carCode'] for v in item['cars'] ]
         #item['carId'] = [ str(v['id']) for v in item['cars']]
